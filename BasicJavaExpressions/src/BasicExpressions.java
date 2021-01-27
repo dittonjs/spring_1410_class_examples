@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class BasicExpressions {
     public static void main(String[] args) {
 
@@ -20,7 +22,7 @@ public class BasicExpressions {
         System.out.print("(45.0 / 2) + (19.5 * 6) - 3 = ");
         System.out.println((45.0 / 2) + (19.5 * 6) - 3);
 
-        java.util.Scanner scanner = new java.util.Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         // ask the user for their name and print it out
 //        System.out.print("Enter your name: ");
