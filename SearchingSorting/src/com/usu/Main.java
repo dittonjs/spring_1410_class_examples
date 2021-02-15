@@ -15,6 +15,11 @@ public class Main {
             System.out.println("You did not find the value");
         }
 
+        final Dog myDog = new Dog();
+        final Dog myDog2 = myDog;
+        final Dog myDog3 = myDog;
+        myDog3 = myDog2;
+
     }
 
     public static boolean linearSearch(int[] data, int searchValue) {
