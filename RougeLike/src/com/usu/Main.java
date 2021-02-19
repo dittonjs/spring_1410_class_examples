@@ -1,6 +1,7 @@
 package com.usu;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
 
@@ -9,12 +10,35 @@ public class Main {
         char[][] level;
         int numRows = 15;
         int numCols = 15;
-        int currentLevel = 1;
+        int currentLevel = 16;
         boolean isAlive = true;
         boolean hasKey = false;
         level = generateLevel(currentLevel, numRows, numCols);
-        displayLevel(level);
+        Scanner scanner = new Scanner(System.in);
+        while(true) {
+            displayLevel(level);
+            char input = scanner.next().charAt(0);
 
+        }
+
+    }
+
+    public static void movePlayer(char[][] level, char input) {
+
+    }
+
+    public static int[] findPlayer(char[][] level) {
+        int[] position = new int[2];
+        for(int row = 0; row < level.length; row++) {
+            for (int col = 0; col < level[row].length; col ++) {
+                if (level[row][col] == 'P') {
+                    position[0] = row;
+                    position[1] = col;
+                }
+            }
+        }
+
+        return position;
     }
 
     public static void displayLevel(char[][] level) {
@@ -36,11 +60,46 @@ public class Main {
         addFloor(level);
         addWalls(level);
         generateTerrain(level);
-//        addPlayer(level);
-//        addBandits(level, currentLevel);
-//        addKey(level);
-//        addExit(level);
+        addPlayer(level);
+        addExit(level);
+        addBandits(level, currentLevel);
+        addExtra(level, 'K');
         return level;
+    }
+
+    public static void addBandits(char[][] level, int currentLevel) {
+        int count = (int)(Math.log(currentLevel) / Math.log(2));
+        if (count == 0) {
+            count = 1;
+        }
+
+        for (int i = 0; i < count; i++) {
+            addExtra(level, 'B');
+        }
+    }
+
+    public static void addExtra(char[][] level, char extra) {
+        Random rng = new Random();
+        int row = rng.nextInt(level.length - 3) + 2;
+        int col = rng.nextInt(level[0].length - 3) + 2;
+
+        boolean placed = false;
+        while(!placed) {
+            if (level[row][col] != ' ') {
+                row --;
+            } else {
+                level[row][col] = extra;
+                placed = true;
+            }
+        }
+    }
+
+    public static void addPlayer(char[][] level) {
+        level[level.length - 2][1] = 'P';
+    }
+
+    public static void addExit(char[][] level) {
+        level[1][level[1].length - 2] = 'E';
     }
 
     public static void addFloor(char[][] level) {
@@ -77,6 +136,11 @@ public class Main {
         randomlyPlaceWalls(level);
         char[][] generatedLevel = doCellularAutomata(level);
         // copy generateLevel into our actual level
+        for(int row = 2; row < level.length - 2; row++) {
+            for (int col = 2; col < level[row].length - 2; col ++) {
+                level[row][col] = generatedLevel[row][col];
+            }
+        }
     }
 
     public static void randomlyPlaceWalls(char[][] level) {
@@ -94,7 +158,54 @@ public class Main {
     public static char[][] doCellularAutomata(char[][] level) {
         char[][] tempLevel = copyLevel(level);
 
+        for(int i = 0; i < 2; i++) {
+            char[][] newTempLevel = new char[tempLevel.length][tempLevel[0].length];
+            for (int row = 2; row < level.length - 2; row++) {
+                for (int col = 2; col < level[row].length - 2; col++) {
+                    int count = countNeighbors(tempLevel, row, col);
+                    if (tempLevel[row][col] == '*' && count < 3) {
+                        newTempLevel[row][col] = ' ';
+                    } else if (tempLevel[row][col] == ' ' && count > 3) {
+                        newTempLevel[row][col] = '*';
+                    } else {
+                        newTempLevel[row][col] = tempLevel[row][col];
+                    }
+
+                }
+            }
+            tempLevel = newTempLevel;
+        }
         //
+        return tempLevel;
+    }
+
+    public static int countNeighbors(char[][] level, int row, int col) {
+        int count = 0;
+        if (level[row - 1][col - 1] == '*') {
+            count ++;
+        }
+        if (level[row - 1][col] == '*') {
+            count ++;
+        }
+        if (level[row - 1][col + 1] == '*') {
+            count ++;
+        }
+        if (level[row][col - 1] == '*') {
+            count ++;
+        }
+        if (level[row][col + 1] == '*') {
+            count ++;
+        }
+        if (level[row + 1][col - 1] == '*') {
+            count ++;
+        }
+        if (level[row + 1][col] == '*') {
+            count ++;
+        }
+        if (level[row + 1][col + 1] == '*') {
+            count ++;
+        }
+        return count;
     }
 
     public static char[][] copyLevel(char[][] level) {
