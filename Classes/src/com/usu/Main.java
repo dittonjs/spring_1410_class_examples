@@ -1,23 +1,22 @@
 package com.usu;
 
-import java.util.Scanner;
+import com.usu.shapes.Circle;
 
 public class Main {
 
     public static void main(String[] args) {
-        Circle myCircle = new Circle(4.5);
-        myCircle.circleCount = 10;
+        Circle myCircle = new Circle();
         Circle myOtherCircle = new Circle(3.1);
+        Circle thirdCircle = new Circle(3.1);
         System.out.println("Circle count is " + Circle.getCircleCount());
-        System.out.println(myCircle.radius);
-        System.out.println(myOtherCircle.radius);
+        System.out.println(myCircle.getRadius());
+        System.out.println(myOtherCircle.getRadius());
 
 
-        myOtherCircle.radius = 1.6;
-        System.out.println(myCircle.radius);
-        System.out.println(myOtherCircle.radius);
-        Main myMain = new Main();
-        myMain.reportCircle(myCircle);
+        myOtherCircle.setRadius(-1.6);
+        System.out.println(myCircle.getRadius());
+        System.out.println(myOtherCircle.getRadius());
+        reportCircle(myOtherCircle);
     }
 
     public static void reportCircle(Circle circle) {
@@ -25,24 +24,4 @@ public class Main {
     }
 }
 
-class Circle {
-    static int circleCount = 0;
-    double radius;
 
-    Circle() {
-        radius = 1.0;
-    }
-
-    Circle(double radius) {
-        this.radius = radius;
-    }
-
-    double getArea() {
-        Circle.getCircleCount();
-        return Math.PI * radius * radius;
-    }
-
-    static int getCircleCount() {
-        return circleCount;
-    }
-}

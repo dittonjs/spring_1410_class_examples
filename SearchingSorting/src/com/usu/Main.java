@@ -1,24 +1,69 @@
 package com.usu;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
+
+
     public static void main(String[] args) {
 	// write your code here
+        int num = 10;
+        int Num = 20;
         int[] data = {3, 6, 14, 65, 23, 43, 102, 47, 129, 19};
-        bubbleSort(data);
+        selectionSort(data);
         int searchValue = 100;
+        String myString = "asdfasdf";
         if (binarySearch(data, searchValue)) {
             System.out.println("You found the value");
         } else {
             System.out.println("You did not find the value");
         }
+        final double PI = 3.1415;
+        final double GRAVITY = 9.8;
+        final int MAX_VALUE = 20000;
 
-        final Dog myDog = new Dog();
-        final Dog myDog2 = myDog;
-        final Dog myDog3 = myDog;
-        myDog3 = myDog2;
+
+        double radius = 4;
+        double area = PI * radius * radius;
+
+        Scanner input = new Scanner(System.in);
+
+        int value1 = 10;
+        double value2 = value1;
+
+        double value3 = 10.9999999 + 2;
+        int value4 = (int)value3;
+
+        boolean mybool = true && true;
+
+        if (!true && !false) {}
+
+        if (true || false) {
+
+        }
+
+        if (1 == 10) {
+
+        }
+
+        String myString = "asdf\" \n"
+        int[] values = new int[2];
+        int[] values2 = {1,2,3,4};
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 
@@ -64,8 +109,21 @@ public class Main {
         } while(didSwap);
     }
 
+    // O(n^2)
     public static void selectionSort(int[] data) {
+        for (int start = 0; start < data.length - 1; start ++) {
+            int minPos = start;
+            for (int scan = start + 1; scan < data.length; scan ++) {
+                if (data[scan] < data[minPos]) {
+                    minPos = scan;
+                }
+            }
 
+            int temp = data[start];
+            data[start] = data[minPos];
+            data[minPos] = temp;
+        }
     }
 
 }
+
