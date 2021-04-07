@@ -9,8 +9,18 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        int[][] vals = new int[10][];
 
-        Shape shape = new Rectangle(1,1,"", true, 1,1);
+        int[][] ragged = {
+                {1},
+                {1,2},
+                {},
+                {1,2,3,5}
+        };
+        vals[0] = new int[]{1,2,3,4,5,6};
+        vals[1] = new int[15];
+
+        Shape shape = new Rectangle(1,2,"", true, 1,1);
         ArrayList<Shape> shapes = new ArrayList();
         int[] values = new int[10];
         ArrayList<Integer> values2 = new ArrayList<>();
@@ -40,6 +50,17 @@ public class Main {
         for (int i = 0; i < shapes.size(); i++) {
             Shape shape = shapes.get(i);
             shape.draw();
+            if (shape instanceof Rectangle) {
+                Rectangle rect = (Rectangle) shape;
+            }
+        }
+    }
+
+    public static void reportLarger(Shape shape1, Shape shape2) {
+        if (shape1.getArea() > shape2.getArea()) {
+            System.out.println("shape1 is larger");
+        } else {
+            System.out.println("shape2 is larger");
         }
     }
 }

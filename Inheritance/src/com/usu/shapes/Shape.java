@@ -1,6 +1,6 @@
 package com.usu.shapes;
 
-public abstract class Shape {
+public abstract class Shape implements Comparable{
     private int x;
     private int y;
     private String color;
@@ -51,5 +51,16 @@ public abstract class Shape {
             return other.x == this.x && other.y == this.y;
         }
         return false;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Shape) {
+            Shape shape = (Shape)o;
+            if (shape.getArea() > this.getArea()) {
+
+            }
+        }
+        return 0;
     }
 }
