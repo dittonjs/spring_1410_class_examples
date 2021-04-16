@@ -1,8 +1,12 @@
 package com.usu;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+
 public class Main {
 
     public static void main(String[] args) {
+
         int[] values = {3, 6, 22, 11, 17, 45, 99, 13, 24};
         bubbleSort(values);
 
@@ -10,10 +14,18 @@ public class Main {
             System.out.println(value);
         }
 
-        int[] values2 = new int[10000000];
+        String[] cities = {"Logan", "Hyrum", "Hyde Park", "Farmington", "Ogden"};
+
+        quickSort(cities);
+
+        Double[] values2 = new Double[1000000];
         for (int i = 0; i < values2.length; i ++) {
-            values2[i] = (int)(Math.random() * 1000000);
+            values2[i] = (Math.random() * 1000000);
         }
+        String one = "Hello";
+        String two = "hello";
+
+        System.out.println(one.compareTo(two));
 
         long start = System.currentTimeMillis();
         quickSort(values2);
@@ -21,27 +33,27 @@ public class Main {
 
         System.out.printf("Completed in %d ms", end - start);
 
-        int[] values3 = new int[100000];
-        for (int i = 0; i < values3.length; i ++) {
-            values3[i] = (int)(Math.random() * 1000000);
-        }
-
-        long start2 = System.currentTimeMillis();
-        bubbleSort(values3);
-        long end2 = System.currentTimeMillis();
+//        int[] values3 = new int[100000];
+//        for (int i = 0; i < values3.length; i ++) {
+//            values3[i] = (int)(Math.random() * 1000000);
+//        }
 //
-        System.out.printf("Completed in %d ms", end2 - start2);
-
+//        long start2 = System.currentTimeMillis();
+//        bubbleSort(values3);
+//        long end2 = System.currentTimeMillis();
+////
+//        System.out.printf("Completed in %d ms", end2 - start2);
 
 	// write your code here
     }
 
-    public static void quickSort(int[] values) {
+
+    public static <T extends Comparable<T>> void quickSort(T[] values) {
         quickSort(values, 0, values.length - 1);
     }
     // bubble sort = n^2
     // quick sort = nlog_2(n)
-    private static void quickSort(int[] values, int start, int end) {
+    private static <T extends Comparable<T>> void quickSort(T[] values, int start, int end) {
         if (start < end) {
             int pivot = partition(values, start, end);
             quickSort(values, start, pivot - 1);
@@ -49,18 +61,18 @@ public class Main {
         }
     };
 
-    private static int partition(int[] values, int start, int end) {
+    private static <T extends Comparable<T>> int partition(T[] values, int start, int end) {
         int middle = (start + end) / 2;
-        int pivotValue = values[middle];
+        T pivotValue = values[middle];
         int pivotIndex = start;
 
         values[middle] = values[start];
         values[start] = pivotValue;
 
         for(int i = start + 1; i <= end; i++) {
-            if (values[i] < pivotValue) {
+            if (values[i].compareTo(pivotValue) < 0) {
                 pivotIndex ++;
-                int temp = values[i];
+                T temp = values[i];
                 values[i] = values[pivotIndex];
                 values[pivotIndex] = temp;
             }
@@ -72,16 +84,28 @@ public class Main {
         return pivotIndex;
     }
 
+
+
     public static void bubbleSort(int[] values) {
-        for(int i = 0; i<values.length; i ++) {
-            for (int j = 0; j < values.length; j ++) {
-                if (values[i] < values[j]) {
-                    int temp = values[i];
-                    values[i] = values[j];
-                    values[j] = temp;
-                }
-            }
+        bubbleSort(values, 0, 0);
+    }
+
+    private static void bubbleSort(int[] values, int i, int j) {
+        if (i > values.length - 1){
+            return;
         }
+        if (j > values.length - 1) {
+            bubbleSort(values, i + 1, 0);
+            return;
+        }
+
+        if (values[i] < values[j]) {
+            int temp = values[i];
+            values[i] = values[j];
+            values[j] = temp;
+        }
+
+        bubbleSort(values, i, j + 1);
     }
 
     // partition
