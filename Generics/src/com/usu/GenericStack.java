@@ -7,7 +7,7 @@ public class GenericStack <T>  {
     private int size = 0;
     public void push(T value) {
         data.add(value);
-        size ++;
+//        size ++;
     }
 
     public boolean isEmpty() {
@@ -15,7 +15,7 @@ public class GenericStack <T>  {
     }
 
     public T peek() {
-        if(size == 0) return null;
+        if(data.size() == 0) return null;
         return data.get(data.size() - 1);
     }
 
@@ -23,7 +23,7 @@ public class GenericStack <T>  {
         if (size == 0) return null;
         T value = peek();
         data.remove(data.size() - 1);
-        size --;
+//        size --;
         return value;
     }
 }
